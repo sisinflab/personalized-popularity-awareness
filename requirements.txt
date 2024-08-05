@@ -1,0 +1,16 @@
+requests
+tqdm
+pandas
+numpy
+torch
+torchvision
+torchaudio
+mamba-ssm
+causal-conv1d
+tensorboard
+scipy
+transformers
+ujson
+multiprocessing_on_dill
+mmh3
+dill
