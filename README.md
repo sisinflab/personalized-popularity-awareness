@@ -6,7 +6,7 @@ In the realm of music recommendation, sequential recommender systems have shown 
 Experimental results demonstrate that a Personalized Most Popular recommender, a method solely based on user-specific popularity, outperforms existing state-of-the-art models.
 Furthermore, augmenting Transformer-based models with personalized popularity awareness yields superior performance, showing improvements ranging from 25.2% to 69.8%.
 
-Our code is based on the `aprec` framework from the [reproducibility work](https://github.com/asash/bert4rec_repro), so you can use the original documentation to learn how to use the framework. 
+Our code is based on the `aprec` framework from this [reproducibility work](https://github.com/asash/bert4rec_repro), so you can use the original documentation to learn how to use the framework. 
 
 # Environment setup
 
