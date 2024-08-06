@@ -12,5 +12,3 @@ ujson
 multiprocessing_on_dill
 mmh3
 dill
-mamba-ssm
-causal-conv1d
