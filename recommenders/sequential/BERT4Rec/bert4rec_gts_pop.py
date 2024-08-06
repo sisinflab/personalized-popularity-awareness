@@ -167,6 +167,7 @@ class BERT4RecPytorchRecommender(Recommender):
                  early_stop_epochs=200,
                  lr=0.001,
                  wd=0,
+                 eps=0.01
                  ):
         super().__init__()
         self.users = ItemId()
@@ -197,6 +198,7 @@ class BERT4RecPytorchRecommender(Recommender):
             self.device = torch.device("cpu")
         self.positions = torch.arange(1, self.val_ndcg_at + 1, dtype=torch.float)
         self.ndcg_discounts = torch.unsqueeze(1 / torch.log2(self.positions + 1), 0)
+        self.eps=eps
 
     def get_tensorboard_dir(self):
         if self.tensorboard_dir is None:
@@ -215,14 +217,14 @@ class BERT4RecPytorchRecommender(Recommender):
         for user_id in self.user_actions:
             self.user_actions[user_id].sort(key=lambda x: (x[0], mmh3.hash(f"{x[1]}_{user_id}")))
 
-    def get_popularity_logits(self, seq, eps=0.1):
+    def get_popularity_logits(self, seq):
         with torch.no_grad():
             vocab_size = self.bert.config.vocab_size
 
             batch_size, _ = seq.shape
             item_count_matrix = torch.stack(
-                [torch.bincount(seq[i], minlength=vocab_size) + eps for i in range(batch_size)])
-            item_count_matrix[:, self.items.size():] = eps
+                [torch.bincount(seq[i], minlength=vocab_size) + self.eps for i in range(batch_size)])
+            item_count_matrix[:, self.items.size():] = self.eps
 
             return (torch.log(item_count_matrix) - torch.log(torch.max(item_count_matrix, dim=1).values).unsqueeze(
                 -1)).unsqueeze(1)

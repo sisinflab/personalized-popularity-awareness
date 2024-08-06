@@ -39,7 +39,8 @@ def BERT4Rec_ppl():
                                       max_epochs=10000, early_stop_epochs=500,
                                       num_hidden_layers=3,
                                       lr=0.0001,
-                                      wd=0
+                                      wd=0,
+                                      eps=0.01
                                       )
 
 
@@ -62,7 +63,8 @@ def SASRec_ppl():
                                 max_epochs=10000, early_stop_epochs=500,
                                 num_blocks=3,
                                 lr=0.0001,
-                                wd=0
+                                wd=0,
+                                eps=0.01
                                 )
 
 def gSASRec():
@@ -88,7 +90,8 @@ def gSASRec_ppl():
                                 lr=0.0001,
                                 wd=0,
                                 negs_per_pos=256,
-                                gbce_t=0.75
+                                gbce_t=0.75,
+                                eps=0.01
                                 )
 
 

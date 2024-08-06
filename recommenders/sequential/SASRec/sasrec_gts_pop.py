@@ -132,7 +132,8 @@ class SASRecRecommender(Recommender):
                  early_stop_epochs=200,
                  val_ndcg_at=10,
                  lr=0.001,
-                 wd=0
+                 wd=0,
+                 eps=0.01
                  ):
         super().__init__()
         self.users = ItemId()
@@ -151,6 +152,7 @@ class SASRecRecommender(Recommender):
         self.max_steps_per_epoch = max_steps_per_epoch
         self.early_stop_epochs = early_stop_epochs
         self.val_ndcg_at = val_ndcg_at
+        self.eps=eps
 
         if torch.cuda.is_available():
             self.device = torch.device("cuda")
@@ -176,11 +178,11 @@ class SASRecRecommender(Recommender):
         for user_id in self.user_actions:
             self.user_actions[user_id].sort(key=lambda x: (x[0], mmh3.hash(f"{x[1]}_{user_id}")))
 
-    def get_popularity_logits(self, seq, eps=0.1):
+    def get_popularity_logits(self, seq):
         with torch.no_grad():
             item_count_matrix = torch.cumsum(torch.nn.functional.one_hot(seq, num_classes=self.items.size() + 2),
-                                             dim=1) + eps
-            item_count_matrix[:, :, self.items.size():] = eps
+                                             dim=1) + self.eps
+            item_count_matrix[:, :, self.items.size():] = self.eps
 
             probs_matrix = torch.div(item_count_matrix, torch.max(item_count_matrix, dim=-1).values.unsqueeze(-1))
             del item_count_matrix

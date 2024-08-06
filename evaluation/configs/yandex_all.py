@@ -39,7 +39,8 @@ def BERT4Rec_ppl():
                                       max_epochs=10000, early_stop_epochs=200,
                                       num_hidden_layers=3,
                                       lr=0.0001,
-                                      wd=0
+                                      wd=0,
+                                      eps=0.01
                                       )
 
 
@@ -61,7 +62,8 @@ def SASRec_ppl():
                              train_batch_size=128, val_batch_size=128,
                              max_epochs=10000, early_stop_epochs=200,
                              num_blocks=3,
-                             lr=0.001
+                             lr=0.001,
+                             eps=0.01
                              )
 
 
@@ -87,7 +89,8 @@ def gSASRec_ppl():
                               num_blocks=3,
                               lr=0.001,
                               negs_per_pos=256,
-                              gbce_t=0.75
+                              gbce_t=0.75,
+                              eps=0.01
                               )
 
 

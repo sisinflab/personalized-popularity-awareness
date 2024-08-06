@@ -137,7 +137,8 @@ class gSASRecRecommender(Recommender):
                  lr=0.001,
                  wd=0,
                  negs_per_pos=256,
-                 gbce_t=0.75
+                 gbce_t=0.75,
+                 eps=0.01
                  ):
         super().__init__()
         self.users = ItemId()
@@ -158,6 +159,7 @@ class gSASRecRecommender(Recommender):
         self.val_ndcg_at = val_ndcg_at
         self.negs_per_pos = negs_per_pos
         self.gbce_t = gbce_t
+        self.eps=eps
 
         if torch.cuda.is_available():
             self.device = torch.device("cuda")
@@ -183,11 +185,11 @@ class gSASRecRecommender(Recommender):
         for user_id in self.user_actions:
             self.user_actions[user_id].sort(key=lambda x: (x[0], mmh3.hash(f"{x[1]}_{user_id}")))
 
-    def get_popularity_logits(self, seq, eps=0.1):
+    def get_popularity_logits(self, seq):
         with torch.no_grad():
             item_count_matrix = torch.cumsum(torch.nn.functional.one_hot(seq, num_classes=self.items.size() + 2),
-                                             dim=1) + eps
-            item_count_matrix[:, :, self.items.size():] = eps
+                                             dim=1) + self.eps
+            item_count_matrix[:, :, self.items.size():] = self.eps
 
             probs_matrix = torch.div(item_count_matrix, torch.max(item_count_matrix, dim=-1).values.unsqueeze(-1))
             del item_count_matrix
