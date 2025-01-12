@@ -28,10 +28,15 @@ series = {RecSys '24}
 
 # Environment setup
 
+The instruction has been tested on an Ubuntu 22.04 LTS machine with an NVIDIA RTX 3090 GPU.
+
+Please follow this step-by-step instruction to reproduce our results.
+
 ### Using venv, set up the environment as follows:
 
 ```
 python3 -m venv <your working directory>/.venv
+echo 'export PYTHONPATH=<your working directory>:$PYTHONPATH' >> .venv/bin/activate
 source .venv/bin/activate
 pip install -r requirements.txt 
 ```

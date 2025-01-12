@@ -12,3 +12,4 @@ ujson
 multiprocessing_on_dill
 mmh3
 dill
+tabulate

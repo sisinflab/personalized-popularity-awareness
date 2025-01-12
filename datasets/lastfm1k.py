@@ -21,10 +21,10 @@ def extract_lastfm1k_dataset():
     if os.path.isfile(LASTFM1K_EVENTS_FILE):
         return
     shell(f"tar xvf {lastfm1k_tar_file} -C {LASTFM1K_DATA_DIR}")
-    shell(f"mv lastfm-dataset-1K/userid-profile.tsv {LASTFM1K_DATA_DIR}")
-    shell(f"mv lastfm-dataset-1K/userid-timestamp-artid-artname-traid-traname.tsv {LASTFM1K_DATA_DIR}")
-    shell(f"mv lastfm-dataset-1K/README.txt {LASTFM1K_DATA_DIR}")
-    shell(f"rm -r lastfm-dataset-1K")
+    shell(f"mv {LASTFM1K_DATA_DIR}/lastfm-dataset-1K/userid-profile.tsv {LASTFM1K_DATA_DIR}")
+    shell(f"mv {LASTFM1K_DATA_DIR}/lastfm-dataset-1K/userid-timestamp-artid-artname-traid-traname.tsv {LASTFM1K_DATA_DIR}")
+    shell(f"mv {LASTFM1K_DATA_DIR}/lastfm-dataset-1K/README.txt {LASTFM1K_DATA_DIR}")
+    shell(f"rm -r {LASTFM1K_DATA_DIR}/lastfm-dataset-1K")
 
 
 def get_lastfm1k_tar_file():

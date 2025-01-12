@@ -96,11 +96,6 @@ def run_experiment(config):
         if hasattr(config, "TARGET_ITEMS_SAMPLER"):
             target_items_sampler = config.TARGET_ITEMS_SAMPLER
 
-        filter_cold_start = True
-
-        if hasattr(config, "FILTER_COLD_START"):
-            filter_cold_start = config.FILTER_COLD_START
-
         recommender_evaluator = RecommendersEvaluator(actions,
                                                       config.RECOMMENDERS,
                                                       config.METRICS,
@@ -113,7 +108,6 @@ def run_experiment(config):
                                                       items=items,
                                                       experiment_config=config,
                                                       target_items_sampler=target_items_sampler,
-                                                      remove_cold_start=filter_cold_start,
                                                       save_split=config.SAVE_SPLIT,
                                                       global_tensorboard_dir=config.global_tensorboard_dir,
                                                       save_models=save_models
